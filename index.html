@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Market Log</title>
+<script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <div class="topbar">
+    <div class="brand">Market Log</div>
+    <div class="tabs">
+      <button class="tab active" data-tab="log">Log email</button>
+      <button class="tab" data-tab="list">My log (<span id="count">0</span>)</button>
+      <button class="tab" data-tab="settings">Settings</button>
+    </div>
+  </div>
+
+  <div id="storageWarn" class="warn hidden">This browser is blocking storage, so logs will be lost when you close Outlook. Use Download Excel before closing.</div>
+
+  <!-- ============ LOG THIS EMAIL ============ -->
+  <section id="tab-log" class="panel">
+    <div id="status" class="status">Reading email…</div>
+    <div id="dupWarn" class="warn hidden"></div>
+
+    <div id="pasteBox" class="hidden">
+      <label>Outlook didn't let me read this email. Paste the email text here:</label>
+      <textarea id="pasteText" rows="5"></textarea>
+      <button id="pasteGo" class="btn">Check pasted text</button>
+    </div>
+
+    <label class="lbl">Category (tap to tick)</label>
+    <div id="cats" class="chips"></div>
+
+    <label class="lbl">People in this email <span class="hint">(tap to fill)</span></label>
+    <div id="people" class="people"></div>
+
+    <div class="grid">
+      <div class="box cust">
+        <div class="boxhead">Customer</div>
+        <label>PIC</label><input id="fCustPic" type="text">
+        <label>Company</label><input id="fCustCo" type="text">
+        <input id="fCustEmail" type="hidden">
+      </div>
+      <div class="box eg">
+        <div class="boxhead">Evergreen colleague</div>
+        <label>Name</label><input id="fEgName" type="text">
+        <label>Office / location</label><input id="fEgOffice" type="text">
+        <input id="fEgEmail" type="hidden">
+      </div>
+    </div>
+
+    <label class="lbl">Vessel / voyage</label>
+    <input id="fVessel" type="text">
+
+    <label class="lbl">What they said <span class="hint">(key sentences picked out — edit freely)</span></label>
+    <textarea id="fDetails" rows="5"></textarea>
+
+    <label class="lbl">My remarks <span class="hint">(optional)</span></label>
+    <input id="fRemarks" type="text">
+
+    <button id="saveBtn" class="btn primary wide">Save to log</button>
+    <div id="saveMsg" class="ok hidden"></div>
+  </section>
+
+  <!-- ============ MY LOG ============ -->
+  <section id="tab-list" class="panel hidden">
+    <div class="row">
+      <button id="dlBtn" class="btn primary">Download Excel</button>
+      <button id="copyBtn" class="btn">Copy for Excel</button>
+    </div>
+    <div id="copyHelp" class="hint hidden">Copied. Open Excel, click cell A1 and press Ctrl+V. If nothing pastes, click in the box below, press Ctrl+A then Ctrl+C.</div>
+    <textarea id="copyArea" class="hidden" rows="3"></textarea>
+    <div class="row">
+      <select id="filterCat"><option value="">All categories</option></select>
+      <input id="search" type="text" placeholder="Search customer, office, vessel…">
+    </div>
+    <div id="list"></div>
+  </section>
+
+  <!-- ============ SETTINGS ============ -->
+  <section id="tab-settings" class="panel hidden">
+    <label class="lbl">Evergreen email domains</label>
+    <div class="hint">Any sender whose email address contains one of these words is treated as an Evergreen colleague. Separate with commas.</div>
+    <input id="sEgDomains" type="text">
+    <button id="sSave" class="btn">Save settings</button>
+    <div id="sMsg" class="ok hidden"></div>
+
+    <label class="lbl">Remembered customer companies</label>
+    <div class="hint">Learnt from your saves (email domain → company).</div>
+    <div id="sCoList" class="maplist"></div>
+
+    <label class="lbl">Remembered colleague locations</label>
+    <div class="hint">Learnt from your saves (email → office).</div>
+    <div id="sLocList" class="maplist"></div>
+
+    <label class="lbl">Backup / move to another PC</label>
+    <div class="hint">Copy the backup code and keep it somewhere safe. To restore, paste a backup code and press Restore — it adds the logs to the ones already here.</div>
+    <div class="row">
+      <button id="bkCopy" class="btn">Show backup code</button>
+      <button id="bkRestore" class="btn">Restore</button>
+    </div>
+    <textarea id="bkArea" rows="4"></textarea>
+    <div id="bkMsg" class="ok hidden"></div>
+  </section>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
